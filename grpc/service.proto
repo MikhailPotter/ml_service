@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+service Model {
+    rpc fit(DataParams) returns (FitResponse);
+    rpc refit(DataParams) returns (RefitResponse);
+    rpc remove(getModelParams) returns (RemoveResponse);
+    rpc predict(PredictParams) returns (PredictResponse);
+    rpc show(getModelParams) returns (ShowResponse);
+}
+
+message DataParams {
+    string model_type = 1;
+    map<string, string> params = 2;
+    string model_name = 3;
+    repeated float data = 4;
+    repeated float target = 5;
+}
+
+message ModelParams {
+    string model_type = 1;
+    map<string, string> params = 2;
+    string model_name = 3;
+}
+
+message getModelParams {
+    string model_name = 1;
+}
+
+message PredictParams {
+    string model_name = 1;
+    repeated float data = 2;
+}
+
+message FitResponse {
+    string status = 1;
+}
+
+message RefitResponse {
+    string status = 1;
+}
+
+message RemoveResponse {
+    string status = 1;
+}
+
+message PredictResponse {
+    repeated float predictions = 1;
+}
+
+message ShowResponse {
+    string show = 1;
+}
