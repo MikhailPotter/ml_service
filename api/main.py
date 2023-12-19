@@ -5,6 +5,7 @@ from functions import (
     model_fit,
     model_refit,
     model_remove,
+    predict,
     show,
 )
 
