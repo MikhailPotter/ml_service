@@ -1,7 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from functions import *
 import uvicorn
+from functions import (
+    model_fit,
+    model_refit,
+    model_remove,
+    show,
+)
 
 app = FastAPI()
 
