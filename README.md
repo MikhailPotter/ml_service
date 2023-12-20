@@ -1,8 +1,8 @@
-# ml_service, с возможностью:
+# ML Service
+This project is a Machine Learning service that allows you to train, manage, and make predictions using different ML models. The service offers customizable training options and can store multiple trained models for later use.
 
-1. Обучать ML-модель с возможностью настройки 
-гиперпараметров. При этом гиперпараметры для разных 
-моделей могут быть разные.
-2. Возвращать список доступных для обучения классов моделей 
-3. Возвращать предсказание конкретной модели, хранить несколько обученных моделей
-4. Обучать заново и удалять уже обученные модели
+Features
+* Train ML models with the ability to adjust hyperparameters
+* Retrieve a list of available model classes for training
+* Return predictions from a specific trained model
+* Retrain models and delete existing ones
