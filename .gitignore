@@ -1,2 +1,2 @@
 catboost_info/*
-api/__pycache__/*
+*.pyc

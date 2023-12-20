@@ -21,7 +21,7 @@ def model_get(model_type: str, params: dict):
 
     else:
         raise NotImplementedError(
-            f"Can work only with LogisticRegression, LightGBM, Catboost"
+            "Can work only with LogisticRegression, LightGBM, Catboost"
         )
 
 
@@ -34,7 +34,7 @@ def model_fit(
     model_location: str = "saved_models/",
 ) -> None:
     if len(train_data) != len(train_target):
-        err = f"'train_data' and 'train_target' must have the same length"
+        err = "'train_data' and 'train_target' must have the same length"
         raise HTTPException(status_code=400, detail=err)
 
     if params is None:
@@ -69,7 +69,7 @@ def model_refit(
     model_location: str = "saved_models/",
 ) -> None:
     if len(train_data) != len(train_target):
-        err = f"'train_data' and 'train_target' must have the same length"
+        err = "'train_data' and 'train_target' must have the same length"
         raise HTTPException(status_code=400, detail=err)
 
     models = os.listdir(model_location)

@@ -30,7 +30,8 @@ class ModelServicer(service_pb2_grpc.ModelServicer):
         return service_pb2.PredictResponse(predictions=predictions)
 
     def show(self, request, context):
-        return service_pb2.ShowResponse(show=show(request.model_name)))
+        return service_pb2.ShowResponse(show=show(request.model_name))
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -38,6 +39,7 @@ def serve():
     server.add_insecure_port('[::]:50051')
     server.start()
     server.wait_for_termination()
+
 
 if __name__ == '__main__':
     serve()
