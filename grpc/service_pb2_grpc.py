@@ -123,76 +123,86 @@ class Model(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Model/fit',
+        return grpc.experimental.unary_unary(
+            request, target, '/Model/fit',
             service__pb2.DataParams.SerializeToString,
             service__pb2.FitResponse.FromString,
             options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata
+        )
 
     @staticmethod
     def refit(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Model/refit',
+              target,
+              options=(),
+              channel_credentials=None,
+              call_credentials=None,
+              insecure=False,
+              compression=None,
+              wait_for_ready=None,
+              timeout=None,
+              metadata=None):
+        return grpc.experimental.unary_unary(
+            request, target, '/Model/refit',
             service__pb2.DataParams.SerializeToString,
             service__pb2.RefitResponse.FromString,
             options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata
+        )
 
     @staticmethod
     def remove(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Model/remove',
+               target,
+               options=(),
+               channel_credentials=None,
+               call_credentials=None,
+               insecure=False,
+               compression=None,
+               wait_for_ready=None,
+               timeout=None,
+               metadata=None):
+        return grpc.experimental.unary_unary(
+            request, target, '/Model/remove',
             service__pb2.getModelParams.SerializeToString,
             service__pb2.RemoveResponse.FromString,
             options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata
+        )
 
     @staticmethod
     def predict(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Model/predict',
+                target,
+                options=(),
+                channel_credentials=None,
+                call_credentials=None,
+                insecure=False,
+                compression=None,
+                wait_for_ready=None,
+                timeout=None,
+                metadata=None):
+        return grpc.experimental.unary_unary(
+            request, target, '/Model/predict',
             service__pb2.PredictParams.SerializeToString,
             service__pb2.PredictResponse.FromString,
             options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata
+            )
 
     @staticmethod
     def show(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Model/show',
+             target,
+             options=(),
+             channel_credentials=None,
+             call_credentials=None,
+             insecure=False,
+             compression=None,            
+             wait_for_ready=None,
+             timeout=None,
+             metadata=None):
+        return grpc.experimental.unary_unary(
+            request, target, '/Model/show',
             service__pb2.getModelParams.SerializeToString,
             service__pb2.ShowResponse.FromString,
             options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata
+        )
