@@ -1,8 +1,8 @@
 FROM python:3.10
 
-WORKDIR /code
-COPY ./pyproject.toml ./poetry.lock ./api/main.py /code
-COPY ./src/api /code/api
+WORKDIR /big_app
+COPY ./pyproject.toml ./poetry.lock ./app/main.py /big_app
+COPY ./app /big_app/app
 
 RUN pip install --upgrade pip
 RUN pip install poetry
