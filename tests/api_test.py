@@ -1,5 +1,5 @@
 import requests
-from api.main import (
+from app.main import (
     DataParams,
     ModelParams,
     getModelParams,

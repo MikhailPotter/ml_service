@@ -1,6 +1,6 @@
 import grpc
-import service_pb2
-import service_pb2_grpc
+import app.service_pb2 as service_pb2
+import app.service_pb2_grpc as service_pb2_grpc
 
 
 def run():
