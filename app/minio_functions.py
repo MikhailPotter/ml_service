@@ -3,7 +3,7 @@ import io
 from minio import Minio
 
 
-def initialize_minio(minio_host, access_key, secret_key, secure=False):
+def minio_init(minio_host, access_key, secret_key, secure=False):
     try:
         minio_client = Minio(
             minio_host, access_key=access_key, secret_key=secret_key, secure=secure
@@ -19,7 +19,7 @@ def initialize_minio(minio_host, access_key, secret_key, secure=False):
         return None, None
 
 
-def save_model_to_minio(minio_client, bucket_name, model_type, model_name, params):
+def minio_save_model(minio_client, bucket_name, model_type, model_name, params):
     try:
         model_info = {"model": model_type, "params": params}
         model_bytes = pickle.dumps(model_info)
@@ -29,17 +29,17 @@ def save_model_to_minio(minio_client, bucket_name, model_type, model_name, param
         print(f"Error saving model to MinIO: {e}")
 
 
-def load_model_from_minio(minio_client, bucket_name, model_name):
+def minio_load_model(minio_client, bucket_name, model_name):
     try:
         model_data = minio_client.get_object(bucket_name, f"{model_name}.pkl")
         loaded_model_info = pickle.loads(model_data.read())
-        return loaded_model_info["model"], loaded_model_info["hyperparameters"]
+        return loaded_model_info["model"], loaded_model_info["params"]
     except Exception as e:
         print(f"Error loading model from MinIO: {e}")
         return None, None
 
 
-def list_of_models_minio(minio_client, bucket_name):
+def minio_get_models(minio_client, bucket_name):
     try:
         objects = minio_client.list_objects(bucket_name, recursive=True)
         model_names = [
