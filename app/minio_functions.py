@@ -39,21 +39,7 @@ def minio_load_model(minio_client, bucket_name, model_name):
         return None, None
 
 
-def minio_get_models(minio_client, bucket_name):
-    try:
-        objects = minio_client.list_objects(bucket_name, recursive=True)
-        model_names = [
-            obj.object_name.replace(".pkl", "")
-            for obj in objects
-            if isinstance(obj.object_name, str) and obj.object_name
-        ]
-        return model_names
-    except Exception as e:
-        print(f"Error listing models in MinIO: {e}")
-        return []
-
-
-def delete_model_from_minio(minio_client, bucket_name, model_name):
+def minio_delete_model(minio_client, bucket_name, model_name):
     try:
         minio_client.remove_object(bucket_name, f"{model_name}.pkl")
     except Exception as e:
