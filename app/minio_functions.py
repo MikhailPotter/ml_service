@@ -1,6 +1,7 @@
 import pickle
 import io
 from minio import Minio
+from minio.error import NoSuchKey, MinioException
 
 
 def minio_init(minio_host, access_key, secret_key, secure=False):
@@ -14,7 +15,7 @@ def minio_init(minio_host, access_key, secret_key, secure=False):
             minio_client.make_bucket(bucket_name)
 
         return minio_client, bucket_name
-    except Exception as e:
+    except MinioException as e:
         print(f"Error initializing MinIO: {e}")
         return None, None
 
@@ -25,7 +26,8 @@ def minio_save_model(minio_client, bucket_name, model_type, model_name, params):
         model_bytes = pickle.dumps(model_info)
         model_data = io.BytesIO(model_bytes)
         minio_client.put_object(bucket_name, f"{model_name}.pkl", model_data, len(model_bytes))
-    except Exception as e:
+        print(f"Successfully saved model {model_name} to MinIO")
+    except MinioException as e:
         print(f"Error saving model to MinIO: {e}")
 
 
@@ -33,8 +35,12 @@ def minio_load_model(minio_client, bucket_name, model_name):
     try:
         model_data = minio_client.get_object(bucket_name, f"{model_name}.pkl")
         loaded_model_info = pickle.loads(model_data.read())
+        print(f"Successfully loaded model {model_name} from MinIO")
         return loaded_model_info["model"], loaded_model_info["params"]
-    except Exception as e:
+    except NoSuchKey:
+        print(f"Model {model_name} does not exist in MinIO")
+        return None, None
+    except MinioException as e:
         print(f"Error loading model from MinIO: {e}")
         return None, None
 
@@ -42,5 +48,8 @@ def minio_load_model(minio_client, bucket_name, model_name):
 def minio_delete_model(minio_client, bucket_name, model_name):
     try:
         minio_client.remove_object(bucket_name, f"{model_name}.pkl")
-    except Exception as e:
+        print(f"Successfully deleted model {model_name} from MinIO")
+    except NoSuchKey:
+        print(f"Model {model_name} does not exist in MinIO")
+    except MinioException as e:
         print(f"Error deleting model from MinIO: {e}")

@@ -2,6 +2,8 @@ import os
 import pickle
 from fastapi import HTTPException
 
+MODEL_LOCATION = "data/saved_models/"
+
 
 def model_get(model_type: str, params: dict):
     if model_type == "LogisticRegression":
@@ -30,8 +32,7 @@ def model_fit(
     model_name: str,
     params: dict,
     train_data: list[list],
-    train_target: list[list],
-    model_location: str = "data/saved_models/",
+    train_target: list[list]
 ) -> None:
     if len(train_data) != len(train_target):
         err = "'train_data' and 'train_target' must have the same length"
@@ -40,7 +41,7 @@ def model_fit(
     if params is None:
         params = {}
     model = model_get(model_type, params)
-    models = os.listdir(model_location)
+    models = os.listdir(MODEL_LOCATION)
 
     if f"{model_name}.pkl" in models:
         err = f"Model '{model_name}' already exist!"
@@ -65,19 +66,18 @@ def model_refit(
     model_name: str,
     params: dict,
     train_data: list,
-    train_target: list,
-    model_location: str = "data/saved_models/",
+    train_target: list
 ) -> None:
     if len(train_data) != len(train_target):
         err = "'train_data' and 'train_target' must have the same length"
         raise HTTPException(status_code=400, detail=err)
 
-    models = os.listdir(model_location)
+    models = os.listdir(MODEL_LOCATION)
     if f"{model_name}.pkl" not in models:
         err = f"'{model_name}' don't exist"
         raise HTTPException(status_code=404, detail=err)
 
-    fname = f"{model_location}{model_name}.pkl"
+    fname = f"{MODEL_LOCATION}{model_name}.pkl"
     model = pickle.load(open(fname, "rb"))
 
     if params is not None:
@@ -88,34 +88,34 @@ def model_refit(
     return None
 
 
-def model_remove(model_name: str, model_location: str = "data/saved_models/") -> None:
-    models = os.listdir(model_location)
+def model_remove(model_name: str) -> None:
+    models = os.listdir(MODEL_LOCATION)
     file = f"{model_name}.pkl"
 
     if file not in models:
         err = "You must point off existing 'model_name'"
         raise HTTPException(status_code=404, detail=err)
     else:
-        os.remove(os.path.join(model_location, file))
+        os.remove(os.path.join(MODEL_LOCATION, file))
     return None
 
 
-def predict(model_name: str, data: list, model_location: str = "data/saved_models/") -> list:
-    models = os.listdir(model_location)
+def predict(model_name: str, data: list) -> list:
+    models = os.listdir(MODEL_LOCATION)
 
     if f"{model_name}.pkl" not in models:
         err = "You must point off existing 'model_name'"
         raise HTTPException(status_code=404, detail=err)
 
-    fname = f"{model_location}{model_name}.pkl"
+    fname = f"{MODEL_LOCATION}{model_name}.pkl"
     model = pickle.load(open(fname, "rb"))
     pred = model.predict_proba(data)[:, 1]
 
     return list(pred)
 
 
-def show(model_name: str, model_location: str = "data/saved_models/") -> dict:
-    models = [file for file in os.listdir(model_location) if file.endswith(".pkl")]
+def show(model_name: str) -> dict:
+    models = [file for file in os.listdir(MODEL_LOCATION) if file.endswith(".pkl")]
 
     if model_name == "All":
         return {"Models": models}
@@ -124,7 +124,7 @@ def show(model_name: str, model_location: str = "data/saved_models/") -> dict:
         err = f"'{model_name}' don't exist"
         raise HTTPException(status_code=404, detail=err)
 
-    fname = f"{model_location}{model_name}.pkl"
+    fname = f"{MODEL_LOCATION}{model_name}.pkl"
     model = pickle.load(open(fname, "rb"))
     model_params = model.get_params()
 
