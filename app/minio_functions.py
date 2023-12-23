@@ -24,7 +24,7 @@ def minio_init():
         return minio_client
     except MinioException as e:
         print(f"Error initializing MinIO: {e}")
-        return None, None
+        return None
 
 
 def minio_save_model(minio_client, model_type, model_name, params):
@@ -56,10 +56,10 @@ def minio_load_model(minio_client, model_name):
         return loaded_model
     except NoSuchKey:
         print(f"Model '{model_name}' does not exist in MinIO")
-        return None, None
+        return None
     except MinioException as e:
         print(f"Error loading model from MinIO: {e}")
-        return None, None
+        return None
 
 
 def minio_delete_model(minio_client, model_name):
